@@ -1,0 +1,15 @@
+┌──(dhiren㉿kali)-[~/Documents/Codes/WEB SCRAPING]
+└─$ source venv/bin/activate           
+                     #this is hwo we cna activate the env                                                                                          
+┌──(venv)─(dhiren㉿kali)-[~/Documents/Codes/WEB SCRAPING]
+└─$ which python
+/home/dhiren/Documents/Codes/WEB SCRAPING/venv/bin/python
+                   #this is how we can place the python in to the folder                                                                                            
+┌──(venv)─(dhiren㉿kali)-[~/Documents/Codes/WEB SCRAPING]
+└─$ pip freeze    #this is used to freeze any dependencies in that folder or env        
+                                                                                                              
+┌──(venv)─(dhiren㉿kali)-[~/Documents/Codes/WEB SCRAPING]
+└─$ deactivate      # this is used to deactivate the venv                     
+
+
+
