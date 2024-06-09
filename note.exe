@@ -11,5 +11,6 @@
 ┌──(venv)─(dhiren㉿kali)-[~/Documents/Codes/WEB SCRAPING]
 └─$ deactivate      # this is used to deactivate the venv                     
 
-
+   useful when navigating or running files
+cd Documents/Codes/WEB\ SCRAPING/api-scrapper
 
