@@ -8,6 +8,11 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
 
+BASE_URL = 'https://remoteok.com/api/'
+
+
+def get_job_posting():
+    res = requests.get(url=BASE_URL,)
 
 if __name__ == "__main__":
     print("hello how you doin ")
