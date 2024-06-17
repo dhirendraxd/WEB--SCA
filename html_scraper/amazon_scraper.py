@@ -38,6 +38,16 @@ def get_product_title(soup):
     except AttributeError:
         return None
 
+def get_product_rating(soup):
+    try:
+        product_rating_section = soup.find('span', attrs={'class': 'a-icon-alt'})
+        if not product_rating_section:
+            return None
+        rating_text = product_rating_section.text.strip().split(" ")[0]
+        return float(rating_text)
+    except (AttributeError, ValueError):
+        return None
+
 def extract_product_info(url):
     product_info = {}
     print(f'Scraping URL: {url}')
@@ -49,13 +59,12 @@ def extract_product_info(url):
     soup = BeautifulSoup(html, "lxml")
     product_info['price'] = get_product_price(soup)
     product_info['title'] = get_product_title(soup)
-
-    return product_info
+    product_info['rating'] = get_product_rating(soup)
+    print(product_info)
 
 if __name__ == "__main__":
     with open('amazon_Products_urls.csv', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
             url = row[0]
-            product_info = extract_product_info(url)
-            print(product_info)
+            extract_product_info(url)
