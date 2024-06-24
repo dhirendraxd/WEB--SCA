@@ -48,6 +48,24 @@ def get_product_rating(soup):
     except (AttributeError, ValueError):
         return None
 
+def get_product_technical_details(soup):
+    details = {}
+    try:
+        technical_details_section = soup.find('div', id="detailBullets_feature_div")
+        if not technical_details_section:
+            return details
+        data_table = technical_details_section.findAll('ul', class_="a-unordered-list a-nostyle a-vertical a-spacing-none detail-bullet-list")
+        for ul in data_table:
+            for li in ul.findAll('li'):
+                key_value = li.findAll('span', class_='a-text-bold')
+                if key_value and len(key_value) == 2:
+                    key = key_value[0].text.strip().replace(':', '')
+                    value = key_value[1].text.strip()
+                    details[key] = value
+    except AttributeError:
+        return details
+    return details
+
 def extract_product_info(url):
     product_info = {}
     print(f'Scraping URL: {url}')
@@ -60,11 +78,17 @@ def extract_product_info(url):
     product_info['price'] = get_product_price(soup)
     product_info['title'] = get_product_title(soup)
     product_info['rating'] = get_product_rating(soup)
-    print(product_info)
+    product_info.update(get_product_technical_details(soup))
+    return product_info
 
 if __name__ == "__main__":
     with open('amazon_Products_urls.csv', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
-        for row in reader:
-            url = row[0]
-            extract_product_info(url)
+        with open('amazon_products_info.csv', mode='w', newline='') as outfile:
+            fieldnames = ['title', 'price', 'rating', 'error']
+            writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for row in reader:
+                url = row[0]
+                product_info = extract_product_info(url)
+                writer.writerow(product_info)
